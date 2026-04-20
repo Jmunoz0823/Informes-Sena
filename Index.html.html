@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe SENA · Jonathan Muñoz</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F3EE;
+    --surface: #FFFFFF;
+    --surface2: #F0EDE7;
+    --border: #E2DDD6;
+    --accent: #1A5C3A;
+    --accent-light: #E8F3ED;
+    --accent-mid: #2E7D52;
+    --text: #1C1A17;
+    --text2: #6B6560;
+    --text3: #9C9690;
+    --danger: #C0392B;
+    --danger-light: #FDECEA;
+    --gold: #B8860B;
+    --gold-light: #FDF8E8;
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+
+  /* Header */
+  .header {
+    background: var(--accent);
+    padding: 1.25rem 1.25rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-inner {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .logo {
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  .header-text p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* Tabs */
+  .tabs-wrap {
+    background: var(--accent);
+    padding: 0 1.25rem 1px;
+  }
+  .tabs {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    gap: 2px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .tab {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .tab.active {
+    color: #fff;
+    border-bottom-color: #fff;
+  }
+
+  /* Main content */
+  .main {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.25rem;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    box-shadow: var(--shadow);
+  }
+
+  .card-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text3);
+    margin-bottom: 10px;
+  }
+
+  /* Select */
+  select {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--surface);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B6560' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  select:focus { outline: none; border-color: var(--accent-mid); }
+
+  /* Textarea */
+  textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--surface);
+    resize: vertical;
+    min-height: 90px;
+    line-height: 1.55;
+    transition: border-color 0.15s;
+  }
+  textarea:focus { outline: none; border-color: var(--accent-mid); }
+  textarea::placeholder { color: var(--text3); }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--accent-mid); }
+  .btn-primary:active { transform: scale(0.98); }
+  .btn-secondary {
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-danger {
+    background: var(--danger-light);
+    color: var(--danger);
+  }
+  .btn-danger:hover { background: #f5c6c3; }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text2);
+    border: 1px solid var(--border);
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  .btn-ghost:hover { background: var(--surface2); }
+
+  .btn-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  /* Output box */
+  .output-box {
+    background: var(--accent-light);
+    border: 1.5px solid #B8D9C8;
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text);
+    min-height: 90px;
+    white-space: pre-wrap;
+    position: relative;
+  }
+  .output-placeholder {
+    color: var(--text3);
+    font-style: italic;
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 9px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: 'DM Mono', monospace;
+  }
+  .badge-green {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+  .badge-gold {
+    background: var(--gold-light);
+    color: var(--gold);
+  }
+
+  /* Spinner */
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Consolidado list */
+  .activity-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    animation: fadeIn 0.2s ease;
+  }
+  .activity-item:last-child { border-bottom: none; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+  .activity-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .activity-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .activity-body {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text2);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 2.5rem 1rem;
+    color: var(--text3);
+  }
+  .empty-state .icon { font-size: 32px; margin-bottom: 10px; }
+  .empty-state p { font-size: 14px; }
+
+  /* Tabs content */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Counter badge */
+  .counter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 99px;
+    background: rgba(255,255,255,0.25);
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    margin-left: 4px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: var(--text);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0;
+    transition: all 0.25s;
+    pointer-events: none;
+    z-index: 200;
+    white-space: nowrap;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Config panel */
+  .config-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .config-row:last-child { border-bottom: none; }
+  .config-label { flex: 1; font-size: 14px; color: var(--text); }
+  .config-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  input[type="text"] {
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    background: var(--surface);
+    width: 100%;
+  }
+  input[type="text"]:focus { outline: none; border-color: var(--accent-mid); }
+
+  @media (max-width: 400px) {
+    .btn-primary { width: 100%; justify-content: center; }
+    .tab { padding: 10px 12px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="logo">📋</div>
+    <div class="header-text">
+      <h1>Informe SENA</h1>
+      <p id="header-nombre">CO1.PCCNTR.9101729</p>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('generar')">Generar</div>
+    <div class="tab" onclick="switchTab('consolidado')">Consolidado <span class="counter" id="counter-badge">0</span></div>
+    <div class="tab" onclick="switchTab('config')">Ajustes</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- TAB: GENERAR -->
+  <div class="tab-content active" id="tab-generar">
+
+    <div class="card">
+      <div class="card-label">Obligación contractual</div>
+      <select id="sel-obligacion" onchange="onObligacionChange()">
+        <option value="">— Selecciona una obligación —</option>
+        <option value="1">1 · Resolver incidentes de hardware, software y redes</option>
+        <option value="2">2 · Actualizar documentación técnica e inventarios</option>
+        <option value="3">3 · Realizar mantenimientos programados</option>
+        <option value="4">4 · Brindar orientación básica a usuarios</option>
+        <option value="5">5 · Elaborar informes de casos y proponer mejoras</option>
+        <option value="6">6 · Apoyar implementación de nuevos servicios</option>
+        <option value="7">7 · Interactuar con proveedores para soporte especializado</option>
+        <option value="8">8 · Apoyar registro actualizado de inventario</option>
+        <option value="9">9 · Generar informes periódicos de actividades</option>
+        <option value="10">10 · Realizar demás actividades asignadas</option>
+      </select>
+    </div>
+
+    <div class="card">
+      <div class="card-label">¿Qué hiciste? (en tus palabras)</div>
+      <textarea id="input-actividad" placeholder="Ej: instalé impresoras en 5 equipos del ambiente 205, cambié contraseñas de administrador, configuré la red en el aula 103..."></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="generarDescripcion()" id="btn-generar">
+          ✦ Generar descripción
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <div class="card-label" style="margin:0;">Resultado</div>
+        <span class="badge badge-green" id="badge-oblig" style="display:none;"></span>
+      </div>
+      <div class="output-box" id="output-descripcion">
+        <span class="output-placeholder">La descripción generada aparecerá aquí...</span>
+      </div>
+      <div class="btn-row" id="result-actions" style="display:none;">
+        <button class="btn btn-secondary" onclick="copiarDescripcion()">📋 Copiar</button>
+        <button class="btn btn-primary" onclick="agregarAlConsolidado()">+ Agregar al consolidado</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB: CONSOLIDADO -->
+  <div class="tab-content" id="tab-consolidado">
+
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <div class="card-label" style="margin:0;">Actividades del mes</div>
+        <div style="display:flex; gap:6px;">
+          <button class="btn btn-ghost" onclick="copiarConsolidado()">📋 Copiar todo</button>
+          <button class="btn btn-danger btn-ghost" onclick="limpiarConsolidado()">Limpiar</button>
+        </div>
+      </div>
+      <div id="lista-consolidado">
+        <div class="empty-state">
+          <div class="icon">📂</div>
+          <p>Aún no hay actividades.<br>Genera descripciones y agrégalas aquí.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TAB: AJUSTES -->
+  <div class="tab-content" id="tab-config">
+
+    <div class="card">
+      <div class="card-label">Datos del contratista</div>
+      <div class="config-row">
+        <div>
+          <div class="config-label">Nombre completo</div>
+          <div class="config-sub">Aparece en el contexto de la IA</div>
+        </div>
+      </div>
+      <input type="text" id="cfg-nombre" value="Jonathan Ferney Muñoz Patiño" style="margin-bottom:12px;">
+      <div class="config-row">
+        <div>
+          <div class="config-label">Centro de formación</div>
+        </div>
+      </div>
+      <input type="text" id="cfg-centro" value="Centro de la Industria, la Empresa y los Servicios - SENA Regional Huila" style="margin-bottom:12px;">
+      <div class="config-row">
+        <div>
+          <div class="config-label">Nro. de contrato</div>
+        </div>
+      </div>
+      <input type="text" id="cfg-contrato" value="CO1.PCCNTR.9101729" style="margin-bottom:16px;">
+      <button class="btn btn-primary" onclick="guardarConfig()">Guardar ajustes</button>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Sobre esta herramienta</div>
+      <p style="font-size:13px; color:var(--text2); line-height:1.6;">
+        Esta herramienta usa la IA de Anthropic (Claude) para generar descripciones formales de actividades. 
+        Necesitas conexión a internet para generar texto. 
+        Tus actividades del consolidado se guardan solo mientras tienes la página abierta.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const obligaciones = {
+  '1': 'Resolver incidentes de hardware, software y redes',
+  '2': 'Actualizar documentación técnica e inventarios',
+  '3': 'Realizar mantenimientos programados',
+  '4': 'Brindar orientación básica a usuarios',
+  '5': 'Elaborar informes de casos y proponer mejoras',
+  '6': 'Apoyar implementación de nuevos servicios',
+  '7': 'Interactuar con proveedores para soporte especializado',
+  '8': 'Apoyar registro actualizado de inventario',
+  '9': 'Generar informes periódicos de actividades',
+  '10': 'Realizar demás actividades asignadas'
+};
+
+let consolidado = [];
+let ultimaDescripcion = '';
+let ultimaObligacion = '';
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['generar','consolidado','config'][i] === tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+function onObligacionChange() {
+  const v = document.getElementById('sel-obligacion').value;
+  const badge = document.getElementById('badge-oblig');
+  if (v) {
+    badge.textContent = 'Obligación ' + v;
+    badge.style.display = 'inline-flex';
+  } else {
+    badge.style.display = 'none';
+  }
+}
+
+async function generarDescripcion() {
+  const oblig = document.getElementById('sel-obligacion').value;
+  const actividad = document.getElementById('input-actividad').value.trim();
+  if (!oblig) { toast('Selecciona una obligación primero'); return; }
+  if (!actividad) { toast('Escribe qué hiciste antes de generar'); return; }
+
+  const output = document.getElementById('output-descripcion');
+  const btn = document.getElementById('btn-generar');
+  const actions = document.getElementById('result-actions');
+
+  output.innerHTML = '<span class="spinner" style="border-color:rgba(26,92,58,0.2);border-top-color:var(--accent);"></span> Generando descripción...';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Generando...';
+  actions.style.display = 'none';
+
+  const nombre = document.getElementById('cfg-nombre').value || 'Jonathan Ferney Muñoz Patiño';
+  const centro = document.getElementById('cfg-centro').value || 'Centro de la Industria, la Empresa y los Servicios - SENA Regional Huila';
+  const obligNombre = obligaciones[oblig];
+
+  const prompt = `Eres un asistente que ayuda a redactar descripciones formales de actividades para informes mensuales de ejecución contractual del SENA (Colombia). El contratista se llama ${nombre} y trabaja en soporte técnico TI en el ${centro}.
+
+Obligación contractual N° ${oblig}: "${obligNombre}"
+
+El contratista hizo lo siguiente (en sus propias palabras): "${actividad}"
+
+Redacta UNA descripción formal, en primera persona, en tiempo pasado, con el nivel de detalle y tono profesional que se usa en estos informes del SENA. Debe tener entre 3 y 6 oraciones, mencionar acciones concretas, cantidades si se mencionaron, y terminar indicando el resultado o que quedó en correcto funcionamiento si aplica. No uses viñetas ni encabezados. Solo el párrafo del texto de la actividad.`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const texto = data.content?.find(b => b.type === 'text')?.text || '';
+    if (!texto) throw new Error('Respuesta vacía');
+    output.textContent = texto;
+    ultimaDescripcion = texto;
+    ultimaObligacion = oblig;
+    actions.style.display = 'flex';
+  } catch(e) {
+    output.innerHTML = '<span style="color:var(--danger);">⚠ Error al generar. Verifica tu conexión a internet e intenta de nuevo.</span>';
+    console.error(e);
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = '✦ Generar descripción';
+}
+
+function copiarDescripcion() {
+  if (!ultimaDescripcion) return;
+  navigator.clipboard.writeText(ultimaDescripcion).then(() => toast('¡Descripción copiada!'));
+}
+
+function agregarAlConsolidado() {
+  if (!ultimaDescripcion) return;
+  const mes = new Date().toLocaleDateString('es-CO', { month: 'short', day: 'numeric' });
+  consolidado.push({ oblig: ultimaObligacion, texto: ultimaDescripcion, fecha: mes });
+  actualizarCounter();
+  renderConsolidado();
+  toast('Actividad agregada al consolidado');
+}
+
+function actualizarCounter() {
+  document.getElementById('counter-badge').textContent = consolidado.length;
+}
+
+function renderConsolidado() {
+  const lista = document.getElementById('lista-consolidado');
+  if (consolidado.length === 0) {
+    lista.innerHTML = `<div class="empty-state"><div class="icon">📂</div><p>Aún no hay actividades.<br>Genera descripciones y agrégalas aquí.</p></div>`;
+    return;
+  }
+  lista.innerHTML = consolidado.map((item, i) => `
+    <div class="activity-item">
+      <div class="activity-header">
+        <div class="activity-meta">
+          <span class="badge badge-green">Oblig. ${item.oblig}</span>
+          <span class="badge badge-gold">${item.fecha}</span>
+          <span style="font-size:12px; color:var(--text3);">${obligaciones[item.oblig]}</span>
+        </div>
+        <button class="btn btn-ghost" style="padding:4px 8px; color:var(--danger); border-color:transparent;" onclick="eliminar(${i})">✕</button>
+      </div>
+      <div class="activity-body">${item.texto}</div>
+    </div>
+  `).join('');
+}
+
+function eliminar(i) {
+  consolidado.splice(i, 1);
+  actualizarCounter();
+  renderConsolidado();
+}
+
+function limpiarConsolidado() {
+  if (consolidado.length === 0) return;
+  if (confirm('¿Limpiar todas las actividades?')) {
+    consolidado = [];
+    actualizarCounter();
+    renderConsolidado();
+  }
+}
+
+function copiarConsolidado() {
+  if (consolidado.length === 0) { toast('No hay actividades para copiar'); return; }
+  const texto = consolidado.map((item, i) =>
+    `OBLIGACIÓN ${item.oblig} – ${obligaciones[item.oblig].toUpperCase()}\n${item.texto}`
+  ).join('\n\n---\n\n');
+  navigator.clipboard.writeText(texto).then(() => toast('¡Consolidado copiado!'));
+}
+
+function guardarConfig() {
+  const contrato = document.getElementById('cfg-contrato').value;
+  document.getElementById('header-nombre').textContent = contrato;
+  toast('Ajustes guardados');
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
