@@ -564,7 +564,7 @@ El contratista hizo lo siguiente (en sus propias palabras): "${actividad}"
 Redacta UNA descripción formal, en primera persona, en tiempo pasado, con el nivel de detalle y tono profesional que se usa en estos informes del SENA. Debe tener entre 3 y 6 oraciones, mencionar acciones concretas, cantidades si se mencionaron, y terminar indicando el resultado o que quedó en correcto funcionamiento si aplica. No uses viñetas ni encabezados. Solo el párrafo del texto de la actividad.`;
 
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://dawn-recipe-e42d.jfmp05.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -669,3 +669,4 @@ function toast(msg) {
 </script>
 </body>
 </html>
+
